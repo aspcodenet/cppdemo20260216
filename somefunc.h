@@ -5,6 +5,9 @@
 #ifndef SOMEFUNC_H
 #define SOMEFUNC_H
 
+#include <string>
+
+
 int add(int a, int b); // function declartion(prototype) for adding two integers
 
 

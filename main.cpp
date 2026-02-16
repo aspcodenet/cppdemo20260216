@@ -1,6 +1,8 @@
 #include <iostream> // headerfile
 #include <iomanip> // Required for setprecision
 #include <vector>
+#include <fstream>
+
 
 
 // OBS! Look at this code and ignore the const-things for a while
@@ -26,8 +28,8 @@
 // 3. function returning a value - int add(int a, int b) { return a + b; }
 // 4. copy by value (pointer,reference)
 // 5. function overloads
-// 6. function pointers
-// 7. functions without name - lambda functions
+// 6. function pointers - advanced
+// 7. functions without name - lambda functions - advanced used more later in this course
 
 // function templates (generics) later!!!
 
@@ -37,7 +39,8 @@
 
 
 void printHelloWorld() { // function definition
-    std::cout << "Hello World!" << std::endl; // output
+    int i = 5 + 10; // variable declaration and initialization
+    std::cout << "Hello World!" <<  i  << std::endl; // output
 }
 
 
@@ -69,6 +72,7 @@ void doAdd(int &x){ // x = 12 // COPIED BY VALUE
 
 
 Player createPlayer(){
+
     std::cout << "Creating a new player..." << std::endl;
     
     Player p; // Creating a new player "object""
@@ -94,23 +98,95 @@ void listAllPlayers(const std::vector<Player> &players){
     }
 }
 
+void ForEach(const std::vector<Player> &players, void (*func)(const Player &)){ // function pointer - advanced
+    for(const Player &p : players){ // for each player in the list of players - this is a range-based for loop - we can also use iterators - for(std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it) - we can also use auto - for(auto it = players.begin(); it != players.end(); ++it)
+        func(p); // call the function pointer with the player as an argument
+    }
+}
+
+
+void printPlayerName(const Player &p){ // function to print a player's information
+    std::cout << "Name: " << p.name << std::endl; // output the player's information
+}
+
+void printFoppa(const Player &p){ // function to print a player's information
+    if(p.jerseyNumber == 21){ // if the player's jersey number is 10
+        std::cout << "This is Foppa: " << p.name << std::endl; // output the player's information
+    }
+}   
+
+void saveToFile(const std::vector<Player> &players) {
+    std::ofstream outFile("players.txt"); // Creates or overwrites players.txt
+
+    if (outFile.is_open()) {
+        for (const Player &p : players) {
+            // Writing data separated by spaces or newlines
+            outFile << p.name << " " << p.jerseyNumber << " " << p.born << "\n";
+        }
+        outFile.close();
+        std::cout << "Data saved successfully!\n";
+    } else {
+        std::cerr << "Unable to open file for writing.\n";
+    }
+}
+
+
+
+
+void readFromFile(std::vector<Player> &players) {
+    std::ifstream inFile("players.txt");
+    Player p;
+
+    if (inFile.is_open()) {
+        players.clear(); 
+        while (inFile >> p.name >> p.jerseyNumber >> p.born) {
+            players.push_back(p);
+        }
+        inFile.close();
+        std::cout << "Data loaded successfully!\n";
+    } else {
+        std::cout << "No save file found. Starting fresh.\n";
+    }
+}
+
+
+
 int main(){
-    int x = 12;
-    //int* x = &x; 
-    //int *x = &x; 
 
-
-    std::cout << "The value of x is: " << x << std::endl; // output the value of x
-    // 12
-    
-    doAdd(x); // reference is an alias - lets us modify the original variable passed to the function - COPIED BY REFERENCE
-    std::cout << "The value of x is: " << x << std::endl; // output the value of x
-    // 13 
-
-
+    // int x = 12;
+    // std::cout << "The value of x is: " << x << std::endl; // output the value of x
+    //  doAdd(x); // reference is an alias - lets us modify the original variable passed to the function - COPIED BY REFERENCE
+    // std::cout << "The value of x is: " << x << std::endl; // output the value of x
 
     // this is KIND OF a python list [], List<Player>, ArrayList<>
     std::vector<Player> players; // "list" of players - kommer senare
+    readFromFile(players); // load players from file if it exists
+
+
+
+    // ForEach(players, printPlayerName); // call the ForEach function with the list of players and the function to print a player's information
+    // ForEach(players, printFoppa); // call the ForEach function with the list
+
+    // // lambda functions - anonymous functions - advanced
+    // ForEach(players, [](const Player &p){ // lambda function to print a player's information
+    //     std::cout << "Name: " << p.name << std::endl; // output the player's information
+    // });
+
+    // ForEach(players, [](const Player &p){ // lambda function to print a player's information
+    //     if(p.jerseyNumber == 21){ // if the player's jersey number is 10
+    //         std::cout << "This is Foppa: " << p.name << std::endl; // output the player's information
+    //     }
+    // });
+
+    // for(Player p : players){ // for each player in the list of players - this is a range-based for loop - we can also use iterators - for(std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it) - we can also use auto - for(auto it = players.begin(); it != players.end(); ++it)
+    //     std::cout << "Name: " << p.name << std::endl; // output the player's information
+    // }
+    // for(Player p : players){ // for each player in the list of players - this is a range-based for loop - we can also use iterators - for(std::vector<Player>::iterator it = players.begin(); it != players.end(); ++it) - we can also use auto - for(auto it = players.begin(); it != players.end(); ++it)
+    //     if(p.jerseyNumber == 21){ // if the player's jersey number is 10
+    //          std::cout << "This is Foppa: " << p.name << std::endl; // output the player's information
+    //     }
+    // }
+
 
 
     // if( age == 15 || year == 2323)
@@ -132,6 +208,7 @@ int main(){
         }else if(selection == 3){ // players vector 1 000 000 players
             listAllPlayers(players);  // all function parameters are passed by value - a copy of the argument is made and passed to the function - in this case, a copy of the vector of players is made and passed to the function - this can be inefficient for large data structures - we can use references to avoid this
         }else if(selection == 4){
+            saveToFile(players); // save players to file before exiting
             break;
         }
     }
