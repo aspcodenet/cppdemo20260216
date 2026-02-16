@@ -11,15 +11,20 @@
             // static/global etc etc 
             // classes/struct etc
 // 2. functions (declaring, defining, calling)
-// WHY? performance ? (NO!!!) - code reuse, readability, organization, abstraction, modularity, maintainability  - DRY
+//      WHY? performance ? (NO!!!) - code reuse, readability, organization, abstraction, modularity, maintainability  - DRY
+//      WHAT? code block with a name (mostly...lambdas)
+//      HOW? return type, name, parameters (optional), body
 // 3. function returning a value - int add(int a, int b) { return a + b; }
 // 4. copy by value (pointer,reference)
 // 5. function overloads
 // 6. functions wih default parameters
-// 7. functions without name - lambda functions
+// 7. function pointers
+// 8. functions without name - lambda functions
+
+// function templates (generics) later!!!
 
 
-// 8. file handling
+// 9. file handling
 
 
 
