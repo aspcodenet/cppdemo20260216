@@ -2,6 +2,10 @@
 #include <iomanip> // Required for setprecision
 #include <vector>
 
+
+// OBS! Look at this code and ignore the const-things for a while
+// You have a list(container/vector) and you create players and put into it
+
 // function order is important in C++. The function must be declared before it is called.
 
 // "THEME OF TODAY:" so you thought you knew functions - and parameters
@@ -22,9 +26,8 @@
 // 3. function returning a value - int add(int a, int b) { return a + b; }
 // 4. copy by value (pointer,reference)
 // 5. function overloads
-// 6. functions wih default parameters
-// 7. function pointers
-// 8. functions without name - lambda functions
+// 6. function pointers
+// 7. functions without name - lambda functions
 
 // function templates (generics) later!!!
 
@@ -71,7 +74,10 @@ Player createPlayer(){
     Player p; // Creating a new player "object""
 
     std::cout << "Enter a name:" ;
-    std::cin >> p.name; // read a line of input into the player's name - std::ws - consume any leading whitespace
+    
+    std::getline(std::cin >> std::ws, p.name);
+    // can add space and then read the name - std::ws - consume any leading whitespace characters before reading the name
+
     std::cout << "Enter a jersey number:" ;
     std::cin >> p.jerseyNumber;
     std::cout << "Enter a birth year:" ;
