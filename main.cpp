@@ -11,6 +11,7 @@
             // static/global etc etc 
             // classes/struct etc
 // 2. functions (declaring, defining, calling)
+// WHY? performance ? (NO!!!) - code reuse, readability, organization, abstraction, modularity, maintainability  - DRY
 // 3. function returning a value - int add(int a, int b) { return a + b; }
 // 4. copy by value (pointer,reference)
 // 5. function overloads
