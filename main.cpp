@@ -1,5 +1,6 @@
 #include <iostream> // headerfile
 #include <iomanip> // Required for setprecision
+#include <vector>
 
 // function order is important in C++. The function must be declared before it is called.
 
@@ -53,7 +54,7 @@ struct Player{ // same as class
 // List<Player>
 
 int main(){
-
+    std::vector<Player> players; // "list" of players - kommer senare
 
 
     // if( age == 15 || year == 2323)
